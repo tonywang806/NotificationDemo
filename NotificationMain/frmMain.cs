@@ -12,11 +12,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace notifaction
+namespace NotificationMain
 {
     public partial class FrmMain : Form
     {
-        private int intClickCount = 0;
+        //private int intClickCount = 0;
+
+        private bool hasNoticed = false;
 
         delegate void SetNotificationFlg(bool hasNotice);
 
@@ -40,6 +42,8 @@ namespace notifaction
             }
 
             SetNotification();
+
+            OpenMessageFrom();
 
             //FrmShowDialog sub = new FrmShowDialog();
             //sub.ShowDialog();
@@ -100,6 +104,8 @@ namespace notifaction
             g.Dispose();
             img.Dispose();
             newIcon.Dispose();
+
+            hasNoticed = true;
         }
 
 
@@ -153,6 +159,8 @@ namespace notifaction
             {
                 SetNotificationFlg notice = new SetNotificationFlg(SetNotificationFlgHandler);
                 this.Invoke(notice, false);
+
+                hasNoticed = false;
             }
             //// 取得した終了コードを表示する
             //MessageBox.Show(iExitCode.ToString());
@@ -160,6 +168,7 @@ namespace notifaction
             // 不要になった時点で破棄する (正しくは オブジェクトの破棄を保証する を参照)
             hProcess.Close();
             hProcess.Dispose();
+
         }
 
         private void FrmMain_FormClosing(object sender, FormClosingEventArgs e)
@@ -178,6 +187,10 @@ namespace notifaction
                 return;
             }
 
+            if (!hasNoticed)
+            {
+                return;
+            }
             Process[] proc = Process.GetProcessesByName("NotificationListener");//创建一个进程数组，把与此进程相关的资源关联。
             if (proc.Length > 0)
             {

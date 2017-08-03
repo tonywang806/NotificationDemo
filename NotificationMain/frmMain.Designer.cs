@@ -1,4 +1,4 @@
-﻿namespace notifaction
+﻿namespace NotificationMain
 {
     partial class FrmMain
     {
