@@ -41,8 +41,8 @@ namespace notifaction
 
             SetNotification();
 
-            FrmShowDialog sub = new FrmShowDialog();
-            sub.ShowDialog();
+            //FrmShowDialog sub = new FrmShowDialog();
+            //sub.ShowDialog();
 
         }
 
